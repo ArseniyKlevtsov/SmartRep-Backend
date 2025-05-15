@@ -1,0 +1,6 @@
+@SmartRep_Backend.WebApi_HostAddress = http://localhost:5105
+
+GET {{SmartRep_Backend.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
