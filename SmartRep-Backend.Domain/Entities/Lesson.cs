@@ -10,7 +10,7 @@ public class Lesson: IEntity
     public double Price { get; set; }
     public DateTime StartTime { get; set; } = DateTime.UtcNow;
     public int DurationMinutes { get; set; } = 45;
-    public bool PaymentStatus { get; set; }
+    public bool PaymentStatus { get; set; } = false;
     public string Status { get; set; }
 
     public DateTime EndTime => StartTime.AddMinutes(DurationMinutes);
@@ -25,5 +25,6 @@ public class Lesson: IEntity
     public User Student { get; set; }
 
     public List<Notification> Notifications { get; set; }
-    public List<LessionTask> LessionTasks { get; set; }
+    public List<LessonTask> LessonTasks { get; set; }
+    public List<Comment> Comments { get; set; }
 }

@@ -20,8 +20,8 @@ public class User: IEntity
     public List<Course> CoursesAsTeacher { get; set; }
     public List<Course> CoursesAsStudent { get; set; }
 
-    public List<Lesson> LessonAsTeacher { get; set; }
-    public List<Lesson> LessonAsStudent { get; set; }
+    public List<Lesson> LessonsAsTeacher { get; set; }
+    public List<Lesson> LessonsAsStudent { get; set; }
 
     public List<Notification> Notifications { get; set; }
 

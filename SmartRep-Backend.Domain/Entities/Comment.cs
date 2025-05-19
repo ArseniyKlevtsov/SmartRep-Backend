@@ -12,6 +12,4 @@ public class Comment: IEntity
 
     public Guid LessonId { get; set; }
     public Lesson Lesson { get; set; }
-
-    public List<Comment> Comments { get; set; }
 }
