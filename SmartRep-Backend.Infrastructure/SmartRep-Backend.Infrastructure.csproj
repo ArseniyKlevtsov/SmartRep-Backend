@@ -24,4 +24,8 @@
     <ProjectReference Include="..\SmartRep-Backend.Domain\SmartRep-Backend.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\files\" />
+  </ItemGroup>
+
 </Project>
