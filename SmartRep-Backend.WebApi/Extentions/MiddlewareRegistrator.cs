@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.FileProviders;
+using SmartRep_Backend.WebApi.Middlewares;
 
 namespace SmartRep_Backend.WebApi.Extentions;
 
@@ -11,6 +12,8 @@ public static class MiddlewareRegistrator
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseMiddleware<GlobalExceptionHandler>();
 
         app.UseHttpsRedirection();
         app.UseCors();
