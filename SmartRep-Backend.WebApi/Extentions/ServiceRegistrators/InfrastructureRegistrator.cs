@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SmartRep_Backend.Domain.interfaces.Repositories;
 using SmartRep_Backend.Domain.interfaces.Services;
 using SmartRep_Backend.Infrastructure.Data;
+using SmartRep_Backend.Infrastructure.Repositories;
 using SmartRep_Backend.Infrastructure.Services;
 
 namespace SmartRep_Backend.WebApi.Extentions.ServiceRegistrators;
@@ -16,7 +18,7 @@ public static class InfrastructureRegistrator
             ));
 
         services.AddScoped<IFileStorageService, LocalFileStorageService>();
-        //services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         //services.AddScoped<IJwtTokenService, JwtTokenService>();
 
         return services;
