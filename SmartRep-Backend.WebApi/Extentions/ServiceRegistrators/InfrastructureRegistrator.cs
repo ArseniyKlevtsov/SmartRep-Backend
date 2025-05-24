@@ -17,10 +17,20 @@ public static class InfrastructureRegistrator
                 new MySqlServerVersion(new Version(8, 0, 42))
             ));
 
-        services.AddScoped<IFileStorageService, LocalFileStorageService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        //services.AddScoped<IJwtTokenService, JwtTokenService>();
+        
+        services.AddScoped<IFileStorageService, LocalFileStorageService>();
+
+        services.AddScoped<ITokenService>(_ =>
+            new TokenService(
+                secretKey: configuration["Jwt:Key"]!,
+                issuer: configuration["Jwt:Issuer"]!,
+                audience: configuration["Jwt:Audience"]!,
+                expiryHours: configuration.GetValue<int>("Jwt:AccessTokenExpirationHours")
+            )
+        );
 
         return services;
     }
+
 }
