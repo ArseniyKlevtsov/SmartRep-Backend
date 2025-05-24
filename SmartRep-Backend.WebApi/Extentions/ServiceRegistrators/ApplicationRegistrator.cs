@@ -1,4 +1,8 @@
-﻿namespace SmartRep_Backend.WebApi.Extentions.ServiceRegistrators;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
+using SmartRep_Backend.Application.Validators.AuthValidatros;
+
+namespace SmartRep_Backend.WebApi.Extentions.ServiceRegistrators;
 
 public static class ApplicationRegistrator
 { 
@@ -6,8 +10,8 @@ public static class ApplicationRegistrator
     {
         //services.AddAutoMapper(typeof(UserProfile).Assembly);
 
-        //services.AddFluentValidationAutoValidation();
-        //services.AddValidatorsFromAssembly(typeof(RegisterRequestDtoValidator).Assembly);
+        services.AddValidatorsFromAssemblyContaining<LoginRequestDtoValidator>();
+
         return services;
     }
 }
