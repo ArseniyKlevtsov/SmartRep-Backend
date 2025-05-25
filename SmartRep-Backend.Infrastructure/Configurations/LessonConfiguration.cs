@@ -11,16 +11,10 @@ internal class LessonConfiguration : IEntityTypeConfiguration<Lesson>
 
         builder.Property(l => l.Name)
             .IsRequired()
-            .HasMaxLength(100)
-            .HasConversion(
-                v => v.ToString(),
-                v => double.Parse(v));
+            .HasMaxLength(100);
 
         builder.Property(l => l.Description)
-            .HasMaxLength(500)
-            .HasConversion(
-                v => v.ToString(),
-                v => double.Parse(v));
+            .HasMaxLength(500);
 
         builder.Property(l => l.Price)
             .HasPrecision(18, 2);
