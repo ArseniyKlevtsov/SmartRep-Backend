@@ -13,11 +13,11 @@ public static class MiddlewareRegistrator
             app.UseSwaggerUI();
         }
 
-        app.UseMiddleware<GlobalExceptionHandler>();
 
         app.UseHttpsRedirection();
         app.UseCors();
         app.UseAuthorization();
+        app.UseMiddleware<GlobalExceptionHandler>();
 
         app.UseSmartrepStaticFiles(builder);
 

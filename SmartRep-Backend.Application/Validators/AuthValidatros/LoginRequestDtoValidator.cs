@@ -7,7 +7,7 @@ public class LoginRequestDtoValidator : AbstractValidator<LoginRequestDto>
 
     public LoginRequestDtoValidator()
     {
-        RuleFor(x => x.UserName)
+        RuleFor(x => x.Username)
             .NotEmpty()
             .WithMessage("The username cannot be empty.")
             .MaximumLength(50)

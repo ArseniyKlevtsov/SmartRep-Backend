@@ -3,7 +3,7 @@ using SmartRep_Backend.Domain.IncludeStates;
 using System.Linq.Expressions;
 
 namespace SmartRep_Backend.Domain.interfaces.Repositories;
-public interface INotificationRepository
+public interface INotificationRepository : IRepository<Notification>
 {
     Task<IEnumerable<Notification>> GetWithIncludeAsync(
         NotificationIncludeState includeState,

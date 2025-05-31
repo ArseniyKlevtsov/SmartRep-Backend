@@ -3,7 +3,7 @@ using SmartRep_Backend.Domain.IncludeStates;
 using System.Linq.Expressions;
 
 namespace SmartRep_Backend.Domain.interfaces.Repositories;
-public interface ILessonTaskRepository
+public interface ILessonTaskRepository : IRepository<LessonTask>
 {
     Task<IEnumerable<LessonTask>> GetWithIncludeAsync(
         LessonTaskIncludeState includeState,

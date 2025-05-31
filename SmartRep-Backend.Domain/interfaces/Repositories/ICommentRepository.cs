@@ -3,7 +3,7 @@ using SmartRep_Backend.Domain.IncludeStates;
 using System.Linq.Expressions;
 
 namespace SmartRep_Backend.Domain.interfaces.Repositories;
-public interface ICommentRepository
+public interface ICommentRepository : IRepository<Comment>
 {
     Task<IEnumerable<Comment>> GetWithIncludeAsync(CommentIncludeState includeState, CancellationToken cancellationToken);
     Task<IEnumerable<Comment>> GetWithIncludeByPredicateAsync(
