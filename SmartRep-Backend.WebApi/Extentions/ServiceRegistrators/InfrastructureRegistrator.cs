@@ -17,6 +17,8 @@ public static class InfrastructureRegistrator
                 new MySqlServerVersion(new Version(8, 0, 42))
             ));
 
+        services.AddScoped<DatabaseInitializer>();
+
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         services.AddScoped<IFileStorageService, LocalFileStorageService>();

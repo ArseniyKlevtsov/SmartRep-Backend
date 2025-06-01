@@ -1,6 +1,5 @@
 ﻿using SmartRep_Backend.Application.Dtos.AuthDtos.Requests;
 using SmartRep_Backend.Application.Dtos.AuthDtos.Responses;
-using SmartRep_Backend.Application.Interfaces.Services;
 using SmartRep_Backend.Application.Interfaces.UseCases.AuthUseCases;
 using SmartRep_Backend.Domain.interfaces.Repositories;
 using SmartRep_Backend.Domain.interfaces.Services;

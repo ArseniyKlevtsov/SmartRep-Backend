@@ -1,15 +1,14 @@
 ﻿using SmartRep_Backend.Domain.interfaces;
 
 namespace SmartRep_Backend.Domain.Entities;
-public class Comment: IEntity
+public class StudentProfile : IEntity
 {
     public Guid Id { get; set; }
-    public string? Message { get; set; }
-    public string? Url { get; set; }
+    public string AboutMe { get; set; } = "";
 
     public Guid UserId { get; set; }
     public User? User { get; set; }
 
-    public Guid LessonId { get; set; }
-    public Lesson? Lesson { get; set; }
+    public List<Lesson>? Lessons { get; set; }
+    public List<Course>? Courses { get; set; }
 }

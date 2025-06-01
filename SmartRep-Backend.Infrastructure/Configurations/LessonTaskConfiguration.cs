@@ -7,23 +7,29 @@ public class LessonTaskConfiguration : IEntityTypeConfiguration<LessonTask>
 {
     public void Configure(EntityTypeBuilder<LessonTask> builder)
     {
-        builder.HasKey(t => t.Id);
+        builder.HasKey(lt => lt.Id);
 
-        builder.Property(t => t.Name)
+        builder.Property(lt => lt.Name)
             .IsRequired()
             .HasMaxLength(200);
 
-        builder.Property(t => t.Description)
+        builder.Property(lt => lt.Description)
             .HasMaxLength(1000);
 
-        builder.Property(t => t.Urls)
+        builder.Property(lt => lt.Url)
             .HasMaxLength(500);
 
-        builder.HasOne(t => t.Lesson)
+        builder.Property(lt => lt.IsSolved)
+            .IsRequired();
+
+        builder.Property(lt => lt.Grade)
+            .IsRequired();
+
+        builder.HasOne(lt => lt.Lesson)
             .WithMany(l => l.LessonTasks)
-            .HasForeignKey(t => t.LessonId)
+            .HasForeignKey(lt => lt.LessonId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasIndex(t => t.LessonId);
+        builder.HasIndex(lt => lt.LessonId);
     }
 }

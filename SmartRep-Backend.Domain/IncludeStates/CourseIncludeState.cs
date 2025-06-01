@@ -3,7 +3,7 @@
 namespace SmartRep_Backend.Domain.IncludeStates;
 public class CourseIncludeState : IIncludeState
 {
-    public bool IncludeTeacher { get; set; }
+    public bool IncludeTeacherProfile { get; set; }
     public bool IncludeStudents { get; set; }
     public bool IncludeLessons { get; set; }
 }

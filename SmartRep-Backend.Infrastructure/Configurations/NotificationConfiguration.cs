@@ -11,18 +11,20 @@ public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
 
         builder.Property(n => n.Title)
             .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(200);
 
         builder.Property(n => n.Message)
             .IsRequired()
-            .HasMaxLength(500);
+            .HasMaxLength(1000);
+
+        builder.Property(n => n.Type)
+            .HasMaxLength(50);
 
         builder.Property(n => n.TriggerTime)
             .IsRequired();
 
-        builder.Property(n => n.Type)
-            .IsRequired()
-            .HasMaxLength(50);
+        builder.Property(n => n.IsRead)
+            .IsRequired();
 
         builder.HasOne(n => n.User)
             .WithMany(u => u.Notifications)
@@ -32,11 +34,9 @@ public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
         builder.HasOne(n => n.Lesson)
             .WithMany(l => l.Notifications)
             .HasForeignKey(n => n.LessonId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasIndex(n => n.UserId);
         builder.HasIndex(n => n.LessonId);
-        builder.HasIndex(n => n.TriggerTime);
-        builder.HasIndex(n => n.IsRead);
     }
 }

@@ -56,25 +56,4 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<User>> GetTeachersWithIncludeAsync(
-        UserIncludeState includeState,
-        CancellationToken cancellationToken)
-    {
-        return await _dbSet
-            .AsNoTracking()
-            .Where(u => u.CoursesAsTeacher.Any())
-            .IncludeWithState(includeState)
-            .ToListAsync(cancellationToken);
-    }
-
-    public async Task<IEnumerable<User>> GetStudentsWithIncludeAsync(
-        UserIncludeState includeState,
-        CancellationToken cancellationToken)
-    {
-        return await _dbSet
-            .AsNoTracking()
-            .Where(u => u.CoursesAsStudent.Any())
-            .IncludeWithState(includeState)
-            .ToListAsync(cancellationToken);
-    }
 }

@@ -9,8 +9,8 @@ public static class CourseIncludeExtension
         this IQueryable<Course> query,
         CourseIncludeState includeState)
     {
-        if (includeState.IncludeTeacher)
-            query = query.Include(c => c.Teacher);
+        if (includeState.IncludeTeacherProfile)
+            query = query.Include(c => c.TeacherProfile);
 
         if (includeState.IncludeStudents)
             query = query.Include(c => c.Students);

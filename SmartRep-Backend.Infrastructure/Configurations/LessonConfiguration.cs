@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SmartRep_Backend.Domain.Entities;
 
 namespace SmartRep_Backend.Infrastructure.Configurations;
-internal class LessonConfiguration : IEntityTypeConfiguration<Lesson>
+public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
 {
     public void Configure(EntityTypeBuilder<Lesson> builder)
     {
@@ -11,13 +11,13 @@ internal class LessonConfiguration : IEntityTypeConfiguration<Lesson>
 
         builder.Property(l => l.Name)
             .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(200);
 
         builder.Property(l => l.Description)
-            .HasMaxLength(500);
+            .HasMaxLength(1000);
 
         builder.Property(l => l.Price)
-            .HasPrecision(18, 2);
+            .IsRequired();
 
         builder.Property(l => l.StartTime)
             .IsRequired();
@@ -26,23 +26,17 @@ internal class LessonConfiguration : IEntityTypeConfiguration<Lesson>
             .IsRequired();
 
         builder.Property(l => l.Status)
-            .HasMaxLength(20)
-            .HasConversion<string>();
+            .HasMaxLength(50);
 
         builder.HasOne(l => l.Course)
             .WithMany(c => c.Lessons)
             .HasForeignKey(l => l.CourseId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(l => l.Teacher)
-            .WithMany(u => u.LessonsAsTeacher)
-            .HasForeignKey(l => l.TeacherId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasOne(l => l.Student)
-            .WithMany(u => u.LessonsAsStudent)
-            .HasForeignKey(l => l.StudentId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(l => l.StudentProfile)
+            .WithMany(sp => sp.Lessons)
+            .HasForeignKey(l => l.StudentProfileId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         builder.HasMany(l => l.Notifications)
             .WithOne(n => n.Lesson)
@@ -54,13 +48,12 @@ internal class LessonConfiguration : IEntityTypeConfiguration<Lesson>
             .HasForeignKey(lt => lt.LessonId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Indexes
-        builder.HasIndex(l => l.StartTime);
+        builder.HasMany(l => l.Comments)
+            .WithOne(c => c.Lesson)
+            .HasForeignKey(c => c.LessonId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasIndex(l => l.CourseId);
-
-        builder.HasIndex(l => l.TeacherId);
-
-        builder.HasIndex(l => l.StudentId);
+        builder.HasIndex(l => l.StudentProfileId);
     }
 }

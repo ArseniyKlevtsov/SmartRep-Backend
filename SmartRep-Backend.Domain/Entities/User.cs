@@ -9,21 +9,20 @@ public class User: IEntity
     public string Username { get; set; } = "";
     public string PasswordHash { get; set; } = "";
     public string Salt { get; set; } = "";
-
-    public string FullName { get; set; } = "";
-    public string Email { get; set; } = "";
-    public string Phone { get; set; } = "";
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public string AboutMe { get; set; } = "";
-    public string AvatarUrl { get; set; } = "";
 
-    public List<Course> CoursesAsTeacher { get; set; } = new List<Course>();
-    public List<Course> CoursesAsStudent { get; set; } = new List<Course>();
+    public string? FullName { get; set; }
+    public string? Email { get; set; }
+    public string? Phone { get; set; }
 
-    public List<Lesson> LessonsAsTeacher { get; set; } = new List<Lesson>();
-    public List<Lesson> LessonsAsStudent { get; set; } = new List<Lesson>();
+    public string? AvatarUrl { get; set; }
 
-    public List<Notification> Notifications { get; set; } = new List<Notification>();
+    public Guid TeacherProfileId { get; set; }
+    public TeacherProfile? TeacherProfile { get; set; }
 
-    public List<Comment> Comments { get; set; } = new List<Comment>();
+    public Guid StudentProfileId { get; set; }
+    public StudentProfile? StudentProfile { get; set; }
+
+    public List<Notification>? Notifications { get; set; }
+    public List<Comment>? Comments { get; set; }
 }

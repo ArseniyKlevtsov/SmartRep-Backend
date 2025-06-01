@@ -10,6 +10,8 @@ public class SmartRepDbContext : DbContext
     public DbSet<LessonTask> LessonTasks { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<TeacherProfile> TeacherProfiles { get; set; }
+    public DbSet<StudentProfile> StudentProfiles { get; set; }
 
     public SmartRepDbContext(DbContextOptions<SmartRepDbContext> options) : base(options) { Database.EnsureCreated(); }
 

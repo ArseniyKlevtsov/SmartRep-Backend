@@ -1,4 +1,4 @@
-﻿namespace SmartRep_Backend.Application.Interfaces.Services;
+﻿namespace SmartRep_Backend.Domain.interfaces.Services;
 public interface IPasswordService
 {
     (string Hash, string Salt) CreatePasswordHash(string password);

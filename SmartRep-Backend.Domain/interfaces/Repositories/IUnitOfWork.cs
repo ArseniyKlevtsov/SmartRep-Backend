@@ -6,6 +6,8 @@ public interface IUnitOfWork : IDisposable
     ILessonRepository Lessons { get; }
     ILessonTaskRepository LessonTasks { get; }
     INotificationRepository Notifications { get; }
+    IStudentProfileRepository StudentProfiles { get; }
+    ITeacherProfileRepository TeacherProfiles { get; }
     IUserRepository Users { get; }
 
     Task SaveAsync();

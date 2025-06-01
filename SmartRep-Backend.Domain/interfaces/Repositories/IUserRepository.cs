@@ -23,12 +23,4 @@ public interface IUserRepository : IRepository<User>
         string email,
         UserIncludeState includeState,
         CancellationToken cancellationToken);
-
-    Task<IEnumerable<User>> GetTeachersWithIncludeAsync(
-        UserIncludeState includeState,
-        CancellationToken cancellationToken);
-
-    Task<IEnumerable<User>> GetStudentsWithIncludeAsync(
-        UserIncludeState includeState,
-        CancellationToken cancellationToken);
 }

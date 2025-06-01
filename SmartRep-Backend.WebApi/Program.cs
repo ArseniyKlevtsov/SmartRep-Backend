@@ -7,6 +7,6 @@ builder.Services.AddSmartRepServices(builder.Configuration);
 
 var app = builder.Build();
 app.UseSmartrepMiddlewares(builder);
-
+ 
 app.MapControllers();
 app.Run();

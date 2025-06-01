@@ -11,7 +11,7 @@ using SmartRep_Backend.Infrastructure.Data;
 namespace SmartRep_Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(SmartRepDbContext))]
-    [Migration("20250519184457_InitialCreate")]
+    [Migration("20250601192152_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -22,19 +22,19 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("CourseUser", b =>
+            modelBuilder.Entity("CourseStudentProfile", b =>
                 {
-                    b.Property<Guid>("CoursesAsStudentId")
+                    b.Property<Guid>("CoursesId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("StudentsId")
                         .HasColumnType("char(36)");
 
-                    b.HasKey("CoursesAsStudentId", "StudentsId");
+                    b.HasKey("CoursesId", "StudentsId");
 
                     b.HasIndex("StudentsId");
 
-                    b.ToTable("CourseUser");
+                    b.ToTable("StudentCourses", (string)null);
                 });
 
             modelBuilder.Entity("SmartRep_Backend.Domain.Entities.Comment", b =>
@@ -51,8 +51,7 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<string>("Urls")
-                        .IsRequired()
+                    b.Property<string>("Url")
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
 
@@ -75,29 +74,22 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("AvatarUrl")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
 
                     b.Property<double>("Price")
                         .HasColumnType("double");
 
-                    b.Property<Guid>("TeacherId")
+                    b.Property<Guid>("TeacherProfileId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("TeacherProfileId");
 
                     b.ToTable("Courses");
                 });
@@ -112,48 +104,38 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)");
 
                     b.Property<int>("DurationMinutes")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
 
                     b.Property<bool>("PaymentStatus")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<double>("Price")
-                        .HasPrecision(18, 2)
                         .HasColumnType("double");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("TeacherId")
+                    b.Property<Guid>("StudentProfileId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("StartTime");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("StudentProfileId");
 
                     b.ToTable("Lessons");
                 });
@@ -165,9 +147,11 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
+
+                    b.Property<int>("Grade")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsSolved")
                         .HasColumnType("tinyint(1)");
@@ -180,8 +164,7 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
-                    b.Property<string>("Urls")
-                        .IsRequired()
+                    b.Property<string>("Url")
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
 
@@ -201,24 +184,23 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<Guid?>("LessonId")
+                    b.Property<Guid>("LessonId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
 
                     b.Property<DateTime>("TriggerTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
@@ -227,18 +209,14 @@ namespace SmartRep_Backend.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsRead");
-
                     b.HasIndex("LessonId");
-
-                    b.HasIndex("TriggerTime");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("SmartRep_Backend.Domain.Entities.User", b =>
+            modelBuilder.Entity("SmartRep_Backend.Domain.Entities.StudentProfile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -249,51 +227,83 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("StudentProfiles");
+                });
+
+            modelBuilder.Entity("SmartRep_Backend.Domain.Entities.TeacherProfile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("AboutMe")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("TeacherProfiles");
+                });
+
+            modelBuilder.Entity("SmartRep_Backend.Domain.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("AvatarUrl")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
 
                     b.Property<string>("Salt")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("StudentProfileId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("TeacherProfileId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("Phone")
-                        .IsUnique();
 
                     b.HasIndex("Username")
                         .IsUnique();
@@ -301,15 +311,15 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CourseUser", b =>
+            modelBuilder.Entity("CourseStudentProfile", b =>
                 {
                     b.HasOne("SmartRep_Backend.Domain.Entities.Course", null)
                         .WithMany()
-                        .HasForeignKey("CoursesAsStudentId")
+                        .HasForeignKey("CoursesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SmartRep_Backend.Domain.Entities.User", null)
+                    b.HasOne("SmartRep_Backend.Domain.Entities.StudentProfile", null)
                         .WithMany()
                         .HasForeignKey("StudentsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -337,13 +347,13 @@ namespace SmartRep_Backend.Infrastructure.Migrations
 
             modelBuilder.Entity("SmartRep_Backend.Domain.Entities.Course", b =>
                 {
-                    b.HasOne("SmartRep_Backend.Domain.Entities.User", "Teacher")
-                        .WithMany("CoursesAsTeacher")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("SmartRep_Backend.Domain.Entities.TeacherProfile", "TeacherProfile")
+                        .WithMany("Courses")
+                        .HasForeignKey("TeacherProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Teacher");
+                    b.Navigation("TeacherProfile");
                 });
 
             modelBuilder.Entity("SmartRep_Backend.Domain.Entities.Lesson", b =>
@@ -351,26 +361,18 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                     b.HasOne("SmartRep_Backend.Domain.Entities.Course", "Course")
                         .WithMany("Lessons")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SmartRep_Backend.Domain.Entities.User", "Student")
-                        .WithMany("LessonsAsStudent")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SmartRep_Backend.Domain.Entities.User", "Teacher")
-                        .WithMany("LessonsAsTeacher")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("SmartRep_Backend.Domain.Entities.StudentProfile", "StudentProfile")
+                        .WithMany("Lessons")
+                        .HasForeignKey("StudentProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Course");
 
-                    b.Navigation("Student");
-
-                    b.Navigation("Teacher");
+                    b.Navigation("StudentProfile");
                 });
 
             modelBuilder.Entity("SmartRep_Backend.Domain.Entities.LessonTask", b =>
@@ -389,7 +391,8 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                     b.HasOne("SmartRep_Backend.Domain.Entities.Lesson", "Lesson")
                         .WithMany("Notifications")
                         .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SmartRep_Backend.Domain.Entities.User", "User")
                         .WithMany("Notifications")
@@ -398,6 +401,28 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Lesson");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SmartRep_Backend.Domain.Entities.StudentProfile", b =>
+                {
+                    b.HasOne("SmartRep_Backend.Domain.Entities.User", "User")
+                        .WithOne("StudentProfile")
+                        .HasForeignKey("SmartRep_Backend.Domain.Entities.StudentProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SmartRep_Backend.Domain.Entities.TeacherProfile", b =>
+                {
+                    b.HasOne("SmartRep_Backend.Domain.Entities.User", "User")
+                        .WithOne("TeacherProfile")
+                        .HasForeignKey("SmartRep_Backend.Domain.Entities.TeacherProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -416,17 +441,25 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                     b.Navigation("Notifications");
                 });
 
+            modelBuilder.Entity("SmartRep_Backend.Domain.Entities.StudentProfile", b =>
+                {
+                    b.Navigation("Lessons");
+                });
+
+            modelBuilder.Entity("SmartRep_Backend.Domain.Entities.TeacherProfile", b =>
+                {
+                    b.Navigation("Courses");
+                });
+
             modelBuilder.Entity("SmartRep_Backend.Domain.Entities.User", b =>
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("CoursesAsTeacher");
-
-                    b.Navigation("LessonsAsStudent");
-
-                    b.Navigation("LessonsAsTeacher");
-
                     b.Navigation("Notifications");
+
+                    b.Navigation("StudentProfile");
+
+                    b.Navigation("TeacherProfile");
                 });
 #pragma warning restore 612, 618
         }

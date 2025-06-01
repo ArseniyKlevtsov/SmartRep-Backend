@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
-using SmartRep_Backend.Application.Interfaces.Services;
 using SmartRep_Backend.Application.Mapping;
 using SmartRep_Backend.Application.Services;
 using SmartRep_Backend.Application.Validators.AuthValidatros;
+using SmartRep_Backend.Domain.interfaces.Services;
 
 namespace SmartRep_Backend.WebApi.Extentions.ServiceRegistrators;
 

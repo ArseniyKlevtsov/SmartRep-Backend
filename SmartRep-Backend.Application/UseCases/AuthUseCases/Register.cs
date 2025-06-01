@@ -2,7 +2,6 @@
 using SmartRep_Backend.Application.Dtos.AuthDtos.Requests;
 using SmartRep_Backend.Application.Dtos.AuthDtos.Responses;
 using SmartRep_Backend.Application.Exceptions;
-using SmartRep_Backend.Application.Interfaces.Services;
 using SmartRep_Backend.Application.Interfaces.UseCases.AuthUseCases;
 using SmartRep_Backend.Domain.Entities;
 using SmartRep_Backend.Domain.interfaces.Repositories;
@@ -12,15 +11,12 @@ namespace SmartRep_Backend.Application.UseCases.AuthUseCases;
 public class Register : IRegisterUseCase
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ITokenService _tokenService;
     private readonly IMapper _mapper;
     private readonly IPasswordService _passwordService;
 
-
-    public Register(IUnitOfWork unitOfWork, ITokenService tokenService, IPasswordService passwordService, IMapper mapper)
+    public Register(IUnitOfWork unitOfWork, IPasswordService passwordService, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
-        _tokenService = tokenService;
         _mapper = mapper;
         _passwordService = passwordService;
 

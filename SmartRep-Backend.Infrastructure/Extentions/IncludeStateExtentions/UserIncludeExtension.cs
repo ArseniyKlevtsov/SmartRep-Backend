@@ -9,17 +9,11 @@ public static class UserIncludeExtension
         this IQueryable<User> query,
         UserIncludeState includeState)
     {
-        if (includeState.IncludeCoursesAsTeacher)
-            query = query.Include(u => u.CoursesAsTeacher);
+        if (includeState.IncludeTeacherProfile)
+            query = query.Include(u => u.TeacherProfile);
 
-        if (includeState.IncludeCoursesAsStudent)
-            query = query.Include(u => u.CoursesAsStudent);
-
-        if (includeState.IncludeLessonsAsTeacher)
-            query = query.Include(u => u.LessonsAsTeacher);
-
-        if (includeState.IncludeLessonsAsStudent)
-            query = query.Include(u => u.LessonsAsStudent);
+        if (includeState.IncludeStudentProfile)
+            query = query.Include(u => u.StudentProfile);
 
         if (includeState.IncludeNotifications)
             query = query.Include(u => u.Notifications);

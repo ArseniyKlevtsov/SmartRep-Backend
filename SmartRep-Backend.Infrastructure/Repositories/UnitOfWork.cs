@@ -12,6 +12,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     private ILessonRepository? _lessonRepository;
     private ILessonTaskRepository? _lessonTaskRepository;
     private INotificationRepository? _notificationRepository;
+    private IStudentProfileRepository? _studentProfileRepository;
+    private ITeacherProfileRepository? _teacherProfileRepository;
     private IUserRepository? _userRepository;
 
     public UnitOfWork(SmartRepDbContext context)
@@ -66,6 +68,26 @@ public class UnitOfWork : IUnitOfWork, IDisposable
             if (_notificationRepository == null)
                 _notificationRepository = new NotificationRepository(_context);
             return _notificationRepository;
+        }
+    }
+
+    public IStudentProfileRepository StudentProfiles
+    {
+        get
+        {
+            if (_studentProfileRepository == null)
+                _studentProfileRepository = new StudentProfileRepository(_context);
+            return _studentProfileRepository;
+        }
+    }
+
+    public ITeacherProfileRepository TeacherProfiles
+    {
+        get
+        {
+            if (_teacherProfileRepository == null)
+                _teacherProfileRepository = new TeacherProfileRepository(_context);
+            return _teacherProfileRepository;
         }
     }
 

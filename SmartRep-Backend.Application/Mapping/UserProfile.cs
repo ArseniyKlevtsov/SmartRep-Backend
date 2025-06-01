@@ -14,7 +14,6 @@ public class UserProfile : Profile
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email ?? string.Empty))
             .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Phone ?? string.Empty))
             .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
-            .ForMember(dest => dest.AboutMe, opt => opt.MapFrom(src => src.AboutMe ?? string.Empty))
             .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.AvatarUrl ?? string.Empty));
     }
 }

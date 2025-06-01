@@ -1,4 +1,4 @@
-﻿using SmartRep_Backend.Application.Interfaces.Services;
+﻿using SmartRep_Backend.Domain.interfaces.Services;
 using System.Security.Cryptography;
 using System.Text;
 

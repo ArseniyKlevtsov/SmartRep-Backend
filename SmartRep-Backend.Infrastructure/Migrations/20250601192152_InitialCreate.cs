@@ -19,23 +19,23 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Username = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    Username = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PasswordHash = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    PasswordHash = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Salt = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FullName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Phone = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                    Salt = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    AboutMe = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
+                    FullName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    AvatarUrl = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Email = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Phone = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AvatarUrl = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TeacherProfileId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    StudentProfileId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -44,51 +44,66 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "StudentProfiles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    AboutMe = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentProfiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StudentProfiles_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "TeacherProfiles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    AboutMe = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherProfiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TeacherProfiles_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Courses",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    AvatarUrl = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    AvatarUrl = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Description = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
+                    Description = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Price = table.Column<double>(type: "double", nullable: false),
-                    TeacherId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    TeacherProfileId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_Users_TeacherId",
-                        column: x => x.TeacherId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "CourseUser",
-                columns: table => new
-                {
-                    CoursesAsStudentId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    StudentsId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CourseUser", x => new { x.CoursesAsStudentId, x.StudentsId });
-                    table.ForeignKey(
-                        name: "FK_CourseUser_Courses_CoursesAsStudentId",
-                        column: x => x.CoursesAsStudentId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CourseUser_Users_StudentsId",
-                        column: x => x.StudentsId,
-                        principalTable: "Users",
+                        name: "FK_Courses_TeacherProfiles_TeacherProfileId",
+                        column: x => x.TeacherProfileId,
+                        principalTable: "TeacherProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -99,19 +114,18 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    Name = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
+                    Description = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Price = table.Column<double>(type: "double", precision: 18, scale: 2, nullable: false),
+                    Price = table.Column<double>(type: "double", nullable: false),
                     StartTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DurationMinutes = table.Column<int>(type: "int", nullable: false),
                     PaymentStatus = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Status = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                    Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CourseId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    TeacherId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    StudentId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    StudentProfileId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -121,19 +135,38 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Lessons_Users_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Users",
+                        name: "FK_Lessons_StudentProfiles_StudentProfileId",
+                        column: x => x.StudentProfileId,
+                        principalTable: "StudentProfiles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "StudentCourses",
+                columns: table => new
+                {
+                    CoursesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    StudentsId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentCourses", x => new { x.CoursesId, x.StudentsId });
                     table.ForeignKey(
-                        name: "FK_Lessons_Users_TeacherId",
-                        column: x => x.TeacherId,
-                        principalTable: "Users",
+                        name: "FK_StudentCourses_Courses_CoursesId",
+                        column: x => x.CoursesId,
+                        principalTable: "Courses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StudentCourses_StudentProfiles_StudentsId",
+                        column: x => x.StudentsId,
+                        principalTable: "StudentProfiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -144,7 +177,7 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Message = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Urls = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
+                    Url = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     LessonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
@@ -174,11 +207,12 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Name = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Description = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
+                    Description = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Urls = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
+                    Url = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IsSolved = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Grade = table.Column<int>(type: "int", nullable: false),
                     LessonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
@@ -198,16 +232,16 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Title = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    Title = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Message = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
+                    Message = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Type = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TriggerTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsRead = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Type = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    LessonId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                    LessonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -217,7 +251,7 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                         column: x => x.LessonId,
                         principalTable: "Lessons",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Notifications_Users_UserId",
                         column: x => x.UserId,
@@ -238,14 +272,9 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_TeacherId",
+                name: "IX_Courses_TeacherProfileId",
                 table: "Courses",
-                column: "TeacherId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CourseUser_StudentsId",
-                table: "CourseUser",
-                column: "StudentsId");
+                column: "TeacherProfileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lessons_CourseId",
@@ -253,19 +282,9 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lessons_StartTime",
+                name: "IX_Lessons_StudentProfileId",
                 table: "Lessons",
-                column: "StartTime");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Lessons_StudentId",
-                table: "Lessons",
-                column: "StudentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Lessons_TeacherId",
-                table: "Lessons",
-                column: "TeacherId");
+                column: "StudentProfileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LessonTasks_LessonId",
@@ -273,19 +292,9 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                 column: "LessonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notifications_IsRead",
-                table: "Notifications",
-                column: "IsRead");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Notifications_LessonId",
                 table: "Notifications",
                 column: "LessonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Notifications_TriggerTime",
-                table: "Notifications",
-                column: "TriggerTime");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_UserId",
@@ -293,15 +302,20 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Email",
-                table: "Users",
-                column: "Email",
+                name: "IX_StudentCourses_StudentsId",
+                table: "StudentCourses",
+                column: "StudentsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentProfiles_UserId",
+                table: "StudentProfiles",
+                column: "UserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Phone",
-                table: "Users",
-                column: "Phone",
+                name: "IX_TeacherProfiles_UserId",
+                table: "TeacherProfiles",
+                column: "UserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -318,19 +332,25 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "CourseUser");
-
-            migrationBuilder.DropTable(
                 name: "LessonTasks");
 
             migrationBuilder.DropTable(
                 name: "Notifications");
 
             migrationBuilder.DropTable(
+                name: "StudentCourses");
+
+            migrationBuilder.DropTable(
                 name: "Lessons");
 
             migrationBuilder.DropTable(
                 name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "StudentProfiles");
+
+            migrationBuilder.DropTable(
+                name: "TeacherProfiles");
 
             migrationBuilder.DropTable(
                 name: "Users");

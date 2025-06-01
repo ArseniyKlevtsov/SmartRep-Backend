@@ -9,30 +9,29 @@ public class CourseConfiguration : IEntityTypeConfiguration<Course>
     {
         builder.HasKey(c => c.Id);
 
-        builder.Property(c => c.Name)
-            .IsRequired()
-            .HasMaxLength(100);
-
         builder.Property(c => c.AvatarUrl)
-            .HasMaxLength(255);
+            .HasMaxLength(500);
 
         builder.Property(c => c.Description)
             .HasMaxLength(1000);
 
-        builder.HasOne(c => c.Teacher)
-            .WithMany(u => u.CoursesAsTeacher)
-            .HasForeignKey(c => c.TeacherId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.Property(c => c.Price)
+            .IsRequired();
+
+        builder.HasOne(c => c.TeacherProfile)
+            .WithMany(tp => tp.Courses)
+            .HasForeignKey(c => c.TeacherProfileId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(c => c.Students)
-            .WithMany(u => u.CoursesAsStudent);
+            .WithMany(sp => sp.Courses)
+            .UsingEntity(j => j.ToTable("StudentCourses"));
 
         builder.HasMany(c => c.Lessons)
             .WithOne(l => l.Course)
             .HasForeignKey(l => l.CourseId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Indexes
-        builder.HasIndex(c => c.TeacherId);
+        builder.HasIndex(c => c.TeacherProfileId);
     }
 }

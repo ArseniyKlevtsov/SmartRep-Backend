@@ -13,7 +13,7 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
             .IsRequired()
             .HasMaxLength(1000);
 
-        builder.Property(c => c.Urls)
+        builder.Property(c => c.Url)
             .HasMaxLength(500);
 
         builder.HasOne(c => c.User)

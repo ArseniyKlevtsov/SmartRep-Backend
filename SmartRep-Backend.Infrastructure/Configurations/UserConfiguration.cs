@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SmartRep_Backend.Domain.Entities;
 
 namespace SmartRep_Backend.Infrastructure.Configurations;
+
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
@@ -11,39 +12,50 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.Username)
             .IsRequired()
-            .HasMaxLength(50);
+            .HasMaxLength(150);
 
         builder.Property(u => u.PasswordHash)
-            .IsRequired()
-            .HasMaxLength(255);
+            .IsRequired(); 
 
         builder.Property(u => u.Salt)
-            .IsRequired()
-            .HasMaxLength(128);
+            .IsRequired();
+
+        builder.Property(u => u.CreatedAt)
+            .IsRequired();
 
         builder.Property(u => u.FullName)
-            .HasMaxLength(100);
+            .HasMaxLength(200);
 
         builder.Property(u => u.Email)
-            .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(200);
 
         builder.Property(u => u.Phone)
-            .HasMaxLength(20);
-
-        builder.Property(u => u.AboutMe)
-            .HasMaxLength(500);
+            .HasMaxLength(15);
 
         builder.Property(u => u.AvatarUrl)
-            .HasMaxLength(255);
+            .HasMaxLength(500);
+
+        builder.HasOne(u => u.TeacherProfile)
+            .WithOne(tp => tp.User)
+            .HasForeignKey<TeacherProfile>(tp => tp.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(u => u.StudentProfile)
+            .WithOne(sp => sp.User)
+            .HasForeignKey<StudentProfile>(sp => sp.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(u => u.Notifications)
+            .WithOne(n => n.User)
+            .HasForeignKey(n => n.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(u => u.Comments)
+            .WithOne(c => c.User)
+            .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasIndex(u => u.Username)
-            .IsUnique();
-
-        builder.HasIndex(u => u.Email)
-            .IsUnique();
-
-        builder.HasIndex(u => u.Phone)
             .IsUnique();
     }
 }

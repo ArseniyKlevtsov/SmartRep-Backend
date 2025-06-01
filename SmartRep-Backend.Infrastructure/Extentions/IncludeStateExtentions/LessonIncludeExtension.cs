@@ -12,11 +12,8 @@ public static class LessonIncludeExtension
         if (includeState.IncludeCourse)
             query = query.Include(l => l.Course);
 
-        if (includeState.IncludeTeacher)
-            query = query.Include(l => l.Teacher);
-
-        if (includeState.IncludeStudent)
-            query = query.Include(l => l.Student);
+        if (includeState.IncludeStudentProfile)
+            query = query.Include(l => l.StudentProfile);
 
         if (includeState.IncludeNotifications)
             query = query.Include(l => l.Notifications);

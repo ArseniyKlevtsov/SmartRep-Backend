@@ -31,7 +31,7 @@ public class GlobalExceptionHandler(RequestDelegate next)
             _ => new ExceptionResponseDto(HttpStatusCode.InternalServerError, "Internal server error. Please retry later. exception.Message:" + exception.Message)
         };
 
-        // if dev mode
+        // *потом над заменить на логирование ошибок =)*
         Console.WriteLine(exception.Message);
         Console.WriteLine(exception.StackTrace);
 
