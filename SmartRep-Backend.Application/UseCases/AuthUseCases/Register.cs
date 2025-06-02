@@ -8,7 +8,7 @@ using SmartRep_Backend.Domain.interfaces.Repositories;
 using SmartRep_Backend.Domain.interfaces.Services;
 
 namespace SmartRep_Backend.Application.UseCases.AuthUseCases;
-public class Register : IRegisterUseCase
+public class Register : IRegister
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;

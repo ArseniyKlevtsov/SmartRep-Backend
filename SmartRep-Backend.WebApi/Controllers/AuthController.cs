@@ -10,10 +10,10 @@ namespace SmartRep_Backend.WebApi.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private readonly ILoginUseCase _login;
-    private readonly IRegisterUseCase _register;
+    private readonly ILogin _login;
+    private readonly IRegister _register;
 
-    public AuthController(ILoginUseCase login, IRegisterUseCase register)
+    public AuthController(ILogin login, IRegister register)
     {
         _login = login;
         _register = register;
@@ -31,6 +31,7 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<LoginResponseDto>> LoginAsync(LoginRequestDto loginRequestDto, CancellationToken cancellationToken)
     {
         var tokenResponse = await _login.ExecuteAsync(loginRequestDto, cancellationToken);
+
         return Ok(tokenResponse);
     }
 

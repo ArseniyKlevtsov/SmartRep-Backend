@@ -2,7 +2,7 @@
 using SmartRep_Backend.Application.Dtos.AuthDtos.Responses;
 
 namespace SmartRep_Backend.Application.Interfaces.UseCases.AuthUseCases;
-public interface IRegisterUseCase
+public interface ILogin
 {
-    Task<RegisterResonseDto> ExecuteAsync(RegisterRequestDto registerRequestDto, CancellationToken cancellationToken);
+    Task<LoginResponseDto> ExecuteAsync(LoginRequestDto loginRequestDto, CancellationToken cancellationToken);
 }

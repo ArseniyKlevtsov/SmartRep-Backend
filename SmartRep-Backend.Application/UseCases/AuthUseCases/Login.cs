@@ -7,7 +7,7 @@ using System.Security.Authentication;
 using System.Security.Claims;
 
 namespace SmartRep_Backend.Application.UseCases.AuthUseCases;
-public class Login : ILoginUseCase
+public class Login : ILogin
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ITokenService _tokenService;
@@ -32,13 +32,15 @@ public class Login : ILoginUseCase
 
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.Username)
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
         };
 
         var token =  _tokenService.GenerateJwtToken(claims);
 
         var tokensRespone = new LoginResponseDto()
         {
+            UserId = user.Id.ToString(),
             AccessToken = token,
         };
 
