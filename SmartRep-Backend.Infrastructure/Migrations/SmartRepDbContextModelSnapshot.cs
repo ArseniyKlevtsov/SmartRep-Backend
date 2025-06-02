@@ -78,6 +78,10 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
 
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
                     b.Property<double>("Price")
                         .HasColumnType("double");
 

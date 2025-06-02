@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using SmartRep_Backend.Application.Dtos.AuthDtos.Responses;
 using SmartRep_Backend.Application.Dtos.UserDtos.Requests;
 using SmartRep_Backend.Application.Dtos.UserDtos.Responses;
 using SmartRep_Backend.Application.Interfaces.UseCases.UserUseCases;

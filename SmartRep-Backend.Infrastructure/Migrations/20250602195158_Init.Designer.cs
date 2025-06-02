@@ -11,8 +11,8 @@ using SmartRep_Backend.Infrastructure.Data;
 namespace SmartRep_Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(SmartRepDbContext))]
-    [Migration("20250601192152_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250602195158_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,6 +80,10 @@ namespace SmartRep_Backend.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<double>("Price")
                         .HasColumnType("double");

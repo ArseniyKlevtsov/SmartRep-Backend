@@ -82,7 +82,7 @@ public class DatabaseInitializer
                 StudentProfileId = Guid.NewGuid()
             };
 
-            user.AvatarUrl = $"/static-files/user-avatars/{user.Id}.pdf";
+            user.AvatarUrl = $"/static-files/user-avatars/{user.Id}.png";
 
 
             var teacherProfile = new TeacherProfile
@@ -113,11 +113,12 @@ public class DatabaseInitializer
             {
                 Id = Guid.NewGuid(),
                 Description = $"Description for course {i}",
+                Name = $"Course {i}",
                 Price = 100 + (i * 20),
                 TeacherProfileId = GetRandomTeacherProfileId()
             };
 
-            course.AvatarUrl = $"/static-files/course-avatars/{course.Id}.pdf";
+            course.AvatarUrl = $"/static-files/course-avatars/{course.Id}.png";
 
             _courses.Add(course);
         }
@@ -171,12 +172,11 @@ public class DatabaseInitializer
                     Id = Guid.NewGuid(),
                     Name = $"Task {i} for {lesson.Name}",
                     Description = $"Description for Task {i} of lesson {lesson.Name}",
-                    Url = $"https://example.com/task{i}",
                     IsSolved = false,
                     Grade = 0,
                     LessonId = lesson.Id
                 };
-
+                lessonTask.Url = $"/static-files/lesson-tasks/{lessonTask.Id}.pdf";
                 _lessonTasks.Add(lessonTask);
             }
         }

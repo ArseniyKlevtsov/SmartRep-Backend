@@ -9,6 +9,9 @@ public class CourseConfiguration : IEntityTypeConfiguration<Course>
     {
         builder.HasKey(c => c.Id);
 
+        builder.Property(c => c.Name)
+            .HasMaxLength(100);
+
         builder.Property(c => c.AvatarUrl)
             .HasMaxLength(500);
 

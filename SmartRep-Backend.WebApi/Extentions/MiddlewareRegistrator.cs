@@ -9,7 +9,7 @@ public static class MiddlewareRegistrator
     {
         if (builder.Environment.IsDevelopment())
         {
-            //app.UseMiddleware<DatabaseInitializerMiddleware>();
+            app.UseMiddleware<DatabaseInitializerMiddleware>();
             app.UseSwagger();
             app.UseSwaggerUI();
         }

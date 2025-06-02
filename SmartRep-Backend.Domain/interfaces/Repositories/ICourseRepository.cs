@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 namespace SmartRep_Backend.Domain.interfaces.Repositories;
 public interface ICourseRepository
 {
+    Task<IEnumerable<Course>> GetWithTeacherAsync(CancellationToken cancellationToken);
+
     Task<IEnumerable<Course>> GetWithIncludeAsync(
         CourseIncludeState includeState,
         CancellationToken cancellationToken);
