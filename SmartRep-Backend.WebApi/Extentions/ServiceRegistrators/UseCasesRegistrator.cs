@@ -1,8 +1,10 @@
 ﻿using SmartRep_Backend.Application.Interfaces.UseCases.AuthUseCases;
 using SmartRep_Backend.Application.Interfaces.UseCases.CourseUseCases;
+using SmartRep_Backend.Application.Interfaces.UseCases.TeacherUseCases;
 using SmartRep_Backend.Application.Interfaces.UseCases.UserUseCases;
 using SmartRep_Backend.Application.UseCases.AuthUseCases;
 using SmartRep_Backend.Application.UseCases.CourseUseCases;
+using SmartRep_Backend.Application.UseCases.TeacherUseCases;
 using SmartRep_Backend.Application.UseCases.UserUseCases;
 
 namespace SmartRep_Backend.WebApi.Extentions.ServiceRegistrators;
@@ -18,6 +20,7 @@ public static class UseCasesRegistrator
         // Users
         services.AddTransient<IGetShortcutUserProfile, GetShortcutUserProfile>();
         services.AddTransient<IGetFSPCourses, GetFSPCourses>();
+        services.AddTransient<IGetFSPTeachers, GetFSPTeachers>();
 
         //
         return services;
