@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartRep_Backend.Infrastructure.Data;
 
@@ -10,9 +11,11 @@ using SmartRep_Backend.Infrastructure.Data;
 namespace SmartRep_Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(SmartRepDbContext))]
-    partial class SmartRepDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250604010241_update-teacher-profile")]
+    partial class updateteacherprofile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

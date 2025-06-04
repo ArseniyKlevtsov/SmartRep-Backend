@@ -19,10 +19,14 @@ public static class UseCasesRegistrator
 
         // Users
         services.AddTransient<IGetShortcutUserProfile, GetShortcutUserProfile>();
+        services.AddTransient<IGetUserProfile, GetUserProfile>();
+
+        // Courses
         services.AddTransient<IGetFSPCourses, GetFSPCourses>();
+
+        // Teachers
         services.AddTransient<IGetFSPTeachers, GetFSPTeachers>();
 
-        //
         return services;
     }
 }

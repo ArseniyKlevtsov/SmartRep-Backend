@@ -10,7 +10,7 @@ public class TeacherProfileConfiguration : IEntityTypeConfiguration<TeacherProfi
         builder.HasKey(tp => tp.Id);
 
         builder.Property(tp => tp.AboutMe)
-            .HasMaxLength(500); 
+            .HasMaxLength(500);
 
         builder.HasOne(tp => tp.User)
             .WithOne(u => u.TeacherProfile)
