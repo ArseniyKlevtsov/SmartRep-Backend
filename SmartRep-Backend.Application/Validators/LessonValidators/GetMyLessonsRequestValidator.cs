@@ -6,7 +6,7 @@ public class GetMyLessonsRequestValidator : AbstractValidator<GetMyLessonsReques
 {
     public GetMyLessonsRequestValidator()
     {
-        RuleFor(x => x.UsedId)
+        RuleFor(x => x.UserId)
             .NotEmpty()
             .WithMessage("The UsedId cannot be empty.");
 

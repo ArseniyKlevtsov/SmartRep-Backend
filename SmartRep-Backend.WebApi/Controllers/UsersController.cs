@@ -28,7 +28,7 @@ public class UsersController : ControllerBase
     }    
     
 
-    [HttpPost("getUserProfileResponse")]
+    [HttpPost("getUserProfile")]
     public async Task<ActionResult<UserProfileResponse>> GetUserProfileResponse(UserInfoRequest dto, CancellationToken cancellationToken)
     {
         var userResponseDto = await _getUserProfile.ExecuteAsync(dto, cancellationToken);

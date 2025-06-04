@@ -8,17 +8,17 @@ namespace SmartRep_Backend.WebApi.Controllers;
 [ApiController]
 public class LessonsController : ControllerBase
 {
-    private readonly IGetMyLessonsAsTeacher _getMyLessonsAsTeacher;
+    private readonly IGetMyLessons _getMyLessons;
 
-    public LessonsController(IGetMyLessonsAsTeacher getMyLessonsAsTeacher)
+    public LessonsController(IGetMyLessons getMyLessonsAsTeacher)
     {
-        _getMyLessonsAsTeacher = getMyLessonsAsTeacher;
+        _getMyLessons = getMyLessonsAsTeacher;
     }
 
-    [HttpPost("getMyLessonsAsTeacher")]
+    [HttpPost("getMyLessons")]
     public async Task<ActionResult<GetMyLessonsResponse>> RegisterAsync(GetMyLessonsRequest dto, CancellationToken cancellationToken)
     {
-        var userResponseDto = await _getMyLessonsAsTeacher.ExecuteAsync(dto, cancellationToken);
+        var userResponseDto = await _getMyLessons.ExecuteAsync(dto, cancellationToken);
         return Ok(userResponseDto);
     }
 }

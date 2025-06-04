@@ -30,7 +30,7 @@ public static class UseCasesRegistrator
         services.AddTransient<IGetFSPTeachers, GetFSPTeachers>();
 
         // Lessons
-        services.AddTransient<IGetMyLessonsAsTeacher, GetMyLessonsAsTeacher>();
+        services.AddTransient<IGetMyLessons, GetMyLessons>();
 
         return services;
     }

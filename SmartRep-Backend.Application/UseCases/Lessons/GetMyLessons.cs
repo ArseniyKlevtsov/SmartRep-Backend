@@ -6,12 +6,12 @@ using SmartRep_Backend.Domain.Entities;
 using SmartRep_Backend.Domain.interfaces.Repositories;
 
 namespace SmartRep_Backend.Application.UseCases.Lessons;
-public class GetMyLessonsAsTeacher : IGetMyLessonsAsTeacher
+public class GetMyLessons : IGetMyLessons
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public GetMyLessonsAsTeacher(IUnitOfWork unitOfWork, IMapper mapper)
+    public GetMyLessons(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -22,12 +22,12 @@ public class GetMyLessonsAsTeacher : IGetMyLessonsAsTeacher
         IEnumerable<Lesson> lessons = new List<Lesson>();
         if (dto.AsTeacher)
         {
-            lessons = await _unitOfWork.Lessons.GetTeacherLessonsByTimeAsync(dto.UsedId, dto.StartDate, dto.EndDate, cancellationToken);
+            lessons = await _unitOfWork.Lessons.GetTeacherLessonsByTimeAsync(dto.UserId, dto.StartDate, dto.EndDate, cancellationToken);
 
         }
         else
         {
-            lessons = await _unitOfWork.Lessons.GetStudentLessonsByTimeAsync(dto.UsedId, dto.StartDate, dto.EndDate, cancellationToken);
+            lessons = await _unitOfWork.Lessons.GetStudentLessonsByTimeAsync(dto.UserId, dto.StartDate, dto.EndDate, cancellationToken);
 
         }
 

@@ -145,7 +145,7 @@ public class DatabaseInitializer
                 var lesson = new Lesson
                 {
                     Id = Guid.NewGuid(),
-                    Name = $"Lesson {i} for {course.Description}",
+                    Name = $"Lesson {i}",
                     Description = $"Description for Lesson {i} of course {course.Description}",
                     Price = 50 + (i * 10),
                     StartTime = DateTime.UtcNow.AddDays(i),
