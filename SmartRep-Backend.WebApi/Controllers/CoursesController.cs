@@ -15,7 +15,7 @@ public class CoursesController : ControllerBase
         _getFSPCourses = getFSPCourses;
     }
 
-    [HttpPost("getFSPCoursesResponse")]
+    [HttpPost("getFSPCourses")]
     public async Task<ActionResult<GetFSPCoursesResponse>> RegisterAsync(GetFSPCoursesRequest dto, CancellationToken cancellationToken)
     {
         var userResponseDto = await _getFSPCourses.ExecuteAsync(dto, cancellationToken);

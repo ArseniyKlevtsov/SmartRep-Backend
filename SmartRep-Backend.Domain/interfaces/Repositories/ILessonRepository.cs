@@ -24,4 +24,16 @@ public interface ILessonRepository : IRepository<Lesson>
         DateTime endTime,
         LessonIncludeState includeState,
         CancellationToken cancellationToken);
+
+    Task<IEnumerable<Lesson>> GetStudentLessonsByTimeAsync(
+        Guid id,
+        DateTime startTime,
+        DateTime endTime,
+        CancellationToken cancellationToken);
+
+    Task<IEnumerable<Lesson>> GetTeacherLessonsByTimeAsync(
+        Guid id,
+        DateTime startTime,
+        DateTime endTime,
+        CancellationToken cancellationToken);
 }

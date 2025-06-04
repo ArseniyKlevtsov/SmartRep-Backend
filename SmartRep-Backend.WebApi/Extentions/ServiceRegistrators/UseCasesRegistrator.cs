@@ -1,9 +1,11 @@
 ﻿using SmartRep_Backend.Application.Interfaces.UseCases.AuthUseCases;
 using SmartRep_Backend.Application.Interfaces.UseCases.CourseUseCases;
+using SmartRep_Backend.Application.Interfaces.UseCases.Lessons;
 using SmartRep_Backend.Application.Interfaces.UseCases.TeacherUseCases;
 using SmartRep_Backend.Application.Interfaces.UseCases.UserUseCases;
 using SmartRep_Backend.Application.UseCases.AuthUseCases;
 using SmartRep_Backend.Application.UseCases.CourseUseCases;
+using SmartRep_Backend.Application.UseCases.Lessons;
 using SmartRep_Backend.Application.UseCases.TeacherUseCases;
 using SmartRep_Backend.Application.UseCases.UserUseCases;
 
@@ -26,6 +28,9 @@ public static class UseCasesRegistrator
 
         // Teachers
         services.AddTransient<IGetFSPTeachers, GetFSPTeachers>();
+
+        // Lessons
+        services.AddTransient<IGetMyLessonsAsTeacher, GetMyLessonsAsTeacher>();
 
         return services;
     }

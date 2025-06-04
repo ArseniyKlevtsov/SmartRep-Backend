@@ -54,8 +54,37 @@ public class LessonRepository : BaseRepository<Lesson>, ILessonRepository
     {
         return await _dbSet
             .AsNoTracking()
-            .Where(l => l.StartTime >= startTime && l.EndTime <= endTime)
+            .Where(l => l.StartTime >= startTime && l.StartTime <= endTime)
             .IncludeWithState(includeState)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<Lesson>> GetStudentLessonsByTimeAsync(
+        Guid id,
+        DateTime startTime,
+        DateTime endTime,
+        CancellationToken cancellationToken)
+    {
+        return await _dbSet
+            .AsNoTracking()
+            .Include(l => l.StudentProfile)
+            .ThenInclude(sp => sp.User)
+            .Where(l => l.StudentProfile.UserId == id && l.StartTime >= startTime && l.StartTime <= endTime)
+            .Include(l => l.Course)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<Lesson>> GetTeacherLessonsByTimeAsync(
+        Guid id,
+        DateTime startTime,
+        DateTime endTime,
+        CancellationToken cancellationToken)
+    {
+        return await _dbSet
+            .AsNoTracking()
+            .Include(l => l.Course)
+            .ThenInclude(c => c.TeacherProfile)
+            .Where(l => l.Course.TeacherProfile.UserId == id && l.StartTime >= startTime && l.StartTime <= endTime)
             .ToListAsync(cancellationToken);
     }
 }
