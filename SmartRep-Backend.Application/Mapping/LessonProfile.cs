@@ -17,5 +17,14 @@ public class LessonProfile : Profile
             .ForMember(dest => dest.PaymentStatus, opt => opt.MapFrom(src => src.PaymentStatus))
             .ForMember(dest => dest.CourseName, opt => opt.MapFrom(src => src.Course.Name))    
             .ForMember(dest => dest.CourseAvatar, opt => opt.MapFrom(src => src.Course.AvatarUrl));
+
+        CreateMap<Lesson, GetLessonResponse>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.DurationMinutes, opt => opt.MapFrom(src => src.DurationMinutes))
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => src.StartTime))
+            .ForMember(dest => dest.PaymentStatus, opt => opt.MapFrom(src => src.PaymentStatus));
     }
 }

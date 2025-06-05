@@ -9,16 +9,25 @@ namespace SmartRep_Backend.WebApi.Controllers;
 public class LessonsController : ControllerBase
 {
     private readonly IGetMyLessons _getMyLessons;
+    private readonly IGetLesson _getLesson;
 
-    public LessonsController(IGetMyLessons getMyLessonsAsTeacher)
+    public LessonsController(IGetMyLessons getMyLessonsAsTeacher, IGetLesson getLesson)
     {
         _getMyLessons = getMyLessonsAsTeacher;
+        _getLesson = getLesson;
     }
 
     [HttpPost("getMyLessons")]
-    public async Task<ActionResult<GetMyLessonsResponse>> RegisterAsync(GetMyLessonsRequest dto, CancellationToken cancellationToken)
+    public async Task<ActionResult<GetMyLessonsResponse>> GetMyLessons(GetMyLessonsRequest dto, CancellationToken cancellationToken)
     {
-        var userResponseDto = await _getMyLessons.ExecuteAsync(dto, cancellationToken);
-        return Ok(userResponseDto);
+        var response = await _getMyLessons.ExecuteAsync(dto, cancellationToken);
+        return Ok(response);
+    }
+
+    [HttpPost("getLesson")]
+    public async Task<ActionResult<GetLessonResponse>> GetLesson(GetLessonRequest dto, CancellationToken cancellationToken)
+    {
+        var response = await _getLesson.ExecuteAsync(dto, cancellationToken);
+        return Ok(response);
     }
 }

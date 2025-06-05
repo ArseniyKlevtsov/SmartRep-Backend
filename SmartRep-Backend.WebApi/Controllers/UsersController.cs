@@ -23,15 +23,15 @@ public class UsersController : ControllerBase
     [HttpPost("getShortcutUserProfile")]
     public async Task<ActionResult<ShortcutUserProfileResponse>> GetShortcutUserProfile(UserInfoRequest dto, CancellationToken cancellationToken)
     {
-        var userResponseDto = await _getShortcutUserProfile.ExecuteAsync(dto, cancellationToken);
-        return Ok(userResponseDto);
+        var response = await _getShortcutUserProfile.ExecuteAsync(dto, cancellationToken);
+        return Ok(response);
     }    
     
 
     [HttpPost("getUserProfile")]
     public async Task<ActionResult<UserProfileResponse>> GetUserProfileResponse(UserInfoRequest dto, CancellationToken cancellationToken)
     {
-        var userResponseDto = await _getUserProfile.ExecuteAsync(dto, cancellationToken);
-        return Ok(userResponseDto);
+        var response = await _getUserProfile.ExecuteAsync(dto, cancellationToken);
+        return Ok(response);
     }
 }

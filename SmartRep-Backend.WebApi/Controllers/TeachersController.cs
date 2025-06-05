@@ -18,7 +18,7 @@ public class TeachersController : ControllerBase
     [HttpPost("getFSPTeachersResponse")]
     public async Task<ActionResult<GetFSPTeachersResponse>> RegisterAsync(GetFSPTeachersRequest dto, CancellationToken cancellationToken)
     {
-        var userResponseDto = await _getFSPTeachers.ExecuteAsync(dto, cancellationToken);
-        return Ok(userResponseDto);
+        var response = await _getFSPTeachers.ExecuteAsync(dto, cancellationToken);
+        return Ok(response);
     }
 }

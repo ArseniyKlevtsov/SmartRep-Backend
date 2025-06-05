@@ -45,6 +45,16 @@ public class LessonTaskRepository : BaseRepository<LessonTask>, ILessonTaskRepos
             .FirstOrDefaultAsync(cancellationToken);
     }
 
+    public async Task<List<LessonTask>?> GetByLessonIdAsync(
+    Guid lessonId,
+    CancellationToken cancellationToken)
+    {
+        return await _dbSet
+            .AsNoTracking()
+            .Where(lt => lt.LessonId == lessonId)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<IEnumerable<LessonTask>> GetBySolvedStatusWithIncludeAsync(
         bool isSolved,
         LessonTaskIncludeState includeState,

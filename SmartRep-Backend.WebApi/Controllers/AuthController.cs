@@ -22,17 +22,17 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<ActionResult<RegisterResonseDto>> RegisterAsync(RegisterRequestDto registerRequestDto, CancellationToken cancellationToken)
     {
-        var userResponseDto = await _register.ExecuteAsync(registerRequestDto, cancellationToken);
+        var response = await _register.ExecuteAsync(registerRequestDto, cancellationToken);
 
-        return Ok(userResponseDto);
+        return Ok(response);
     }
 
     [HttpPost("login")]
     public async Task<ActionResult<LoginResponseDto>> LoginAsync(LoginRequestDto loginRequestDto, CancellationToken cancellationToken)
     {
-        var tokenResponse = await _login.ExecuteAsync(loginRequestDto, cancellationToken);
+        var response = await _login.ExecuteAsync(loginRequestDto, cancellationToken);
 
-        return Ok(tokenResponse);
+        return Ok(response);
     }
 
     [HttpGet("protected")]

@@ -23,4 +23,8 @@ public interface ILessonTaskRepository : IRepository<LessonTask>
         bool isSolved,
         LessonTaskIncludeState includeState,
         CancellationToken cancellationToken);
+
+    Task<List<LessonTask>?> GetByLessonIdAsync(
+        Guid lessonId,
+        CancellationToken cancellationToken);
 }
