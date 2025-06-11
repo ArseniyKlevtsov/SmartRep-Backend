@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using SmartRep_Backend.Application.Dtos.Courses.Requests;
 using SmartRep_Backend.Application.Dtos.Courses.Responses;
 using SmartRep_Backend.Domain.Entities;
 
 namespace SmartRep_Backend.Application.Mapping;
-public class CoursProfile : Profile
+public class CourseProfile : Profile
 {
-    public CoursProfile()
+    public CourseProfile()
     {
         CreateMap<Course, CoursePreviewResponse>()
             .ForMember(dest => dest.CourseId, opt => opt.MapFrom(src => src.Id))
@@ -15,5 +16,11 @@ public class CoursProfile : Profile
             .ForMember(dest => dest.CourseDescription, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.TeacherAvatarUrl, opt => opt.MapFrom(src => src.TeacherProfile.User.AvatarUrl ?? string.Empty))
             .ForMember(dest => dest.TeacherName, opt => opt.MapFrom(src => src.TeacherProfile.User.FullName ?? string.Empty));
+
+
+        CreateMap<CreateCourseRequest, Course>()
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name ?? string.Empty))
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description ?? string.Empty));
     }
 }

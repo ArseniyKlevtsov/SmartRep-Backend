@@ -23,4 +23,6 @@ public interface IUserRepository : IRepository<User>
         string email,
         UserIncludeState includeState,
         CancellationToken cancellationToken);
+
+    Task<IEnumerable<User>> GetUsersByNamesAsync(IEnumerable<string> usernames, CancellationToken cancellationToken);
 }
