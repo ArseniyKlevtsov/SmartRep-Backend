@@ -29,6 +29,7 @@ public static class UseCasesRegistrator
 
         // Courses
         services.AddTransient<IGetFSPCourses, GetFSPCourses>();
+        services.AddTransient<IGetMyCourses, GetMyCourses>();
 
         // Teachers
         services.AddTransient<IGetFSPTeachers, GetFSPTeachers>();

@@ -43,6 +43,25 @@ public class Register : IRegister
             };
 
             await _unitOfWork.Users.AddAsync(user, cancellationToken);
+
+            var teacherProfile = new TeacherProfile
+            {
+                Id = user.TeacherProfileId,
+                AboutMe = $"About teacher {user.Username}",
+                UserId = user.Id,
+                StatusConfirmed = false
+            };
+
+            var studentProfile = new StudentProfile
+            {
+                Id = user.StudentProfileId,
+                AboutMe = $"About student {user.Username}",
+                UserId = user.Id
+            };
+
+            await _unitOfWork.TeacherProfiles.AddAsync(teacherProfile, cancellationToken);
+            await _unitOfWork.StudentProfiles.AddAsync(studentProfile, cancellationToken);
+
             await _unitOfWork.SaveAsync();
 
         }

@@ -89,7 +89,8 @@ public class DatabaseInitializer
             {
                 Id = user.TeacherProfileId,
                 AboutMe = $"About teacher {user.Username}",
-                UserId = user.Id
+                UserId = user.Id,
+                StatusConfirmed = false,
             };
 
             var studentProfile = new StudentProfile
