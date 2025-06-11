@@ -13,14 +13,23 @@ public class CoursesController : ControllerBase
     private readonly IUpdateCourse _updateCourse;
     private readonly ICreateCourse _createCourse;
     private readonly IDeleteCourse _deleteCourse;
+    private readonly IGetFullCourse _getFullCourse;
 
-    public CoursesController(IGetFSPCourses getFSPCourses, IGetMyCourses getMyCourses, IUpdateCourse updateCourse, ICreateCourse createCourse, IDeleteCourse deleteCourse)
+
+    public CoursesController(
+        IGetFSPCourses getFSPCourses,
+        IGetMyCourses getMyCourses,
+        IUpdateCourse updateCourse,
+        ICreateCourse createCourse,
+        IDeleteCourse deleteCourse,
+        IGetFullCourse getFullCourse)
     {
         _getFSPCourses = getFSPCourses;
         _getMyCourses = getMyCourses;
         _updateCourse = updateCourse;
         _createCourse = createCourse;
         _deleteCourse = deleteCourse;
+        _getFullCourse = getFullCourse;
     }
 
     [HttpPost("getFSPCourses")]
@@ -56,5 +65,12 @@ public class CoursesController : ControllerBase
     {
         await _deleteCourse.ExecuteAsync(id, cancellationToken);
         return Ok();
+    }
+
+    [HttpPost("getFullCourse")]
+    public async Task<ActionResult<FullCourseResponse>> GetFullCourse(CourseInfoRequest dto, CancellationToken cancellationToken)
+    {
+        var response = await _getFullCourse.ExecuteAsync(dto, cancellationToken);
+        return Ok(response);
     }
 }

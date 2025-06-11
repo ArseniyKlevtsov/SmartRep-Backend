@@ -33,6 +33,7 @@ public static class UseCasesRegistrator
         services.AddTransient<ICreateCourse, CreateCourse>();
         services.AddTransient<IUpdateCourse, UpdateCourse>();
         services.AddTransient<IDeleteCourse, DeleteCourse>();
+        services.AddTransient<IGetFullCourse, GetFullCourse>();
 
         // Teachers
         services.AddTransient<IGetFSPTeachers, GetFSPTeachers>();

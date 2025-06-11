@@ -10,10 +10,24 @@ public static class CourseIncludeExtension
         CourseIncludeState includeState)
     {
         if (includeState.IncludeTeacherProfile)
+        {
             query = query.Include(c => c.TeacherProfile);
 
+            if (includeState.IncludeTeacherUser)
+            {
+                query = query.Include(c => c.TeacherProfile.User);
+            }
+        }
+
         if (includeState.IncludeStudents)
+        {
             query = query.Include(c => c.Students);
+
+            if (includeState.IncludeStudentUsers)
+            {
+                query = query.Include(c => c.Students).ThenInclude(s => s.User);
+            }
+        }
 
         if (includeState.IncludeLessons)
             query = query.Include(c => c.Lessons);
