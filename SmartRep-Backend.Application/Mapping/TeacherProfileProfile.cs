@@ -11,6 +11,7 @@ public class TeacherProfileProfile : Profile
     {
         CreateMap<TeacherProfile, TeacherPreviewResponse>()
             .ForMember(dest => dest.TeacherId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
             .ForMember(dest => dest.TeacherAvatarUrl, opt => opt.MapFrom(src => src.User.AvatarUrl ?? string.Empty))
             .ForMember(dest => dest.TeacherName, opt => opt.MapFrom(src => src.User.FullName ?? string.Empty))
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email ?? string.Empty))
