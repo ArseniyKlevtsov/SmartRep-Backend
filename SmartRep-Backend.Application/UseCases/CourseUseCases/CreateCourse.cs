@@ -33,7 +33,6 @@ public class CreateCourse : ICreateCourse
             throw new InvalidOperationException($"User with ID {dto.UserId} is not a teacher");
         }
 
-        course.TeacherProfile = user.TeacherProfile;
         course.TeacherProfileId = user.TeacherProfile.Id;
 
         await _unitOfWork.Courses.AddAsync(course, cancellationToken);

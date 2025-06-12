@@ -18,7 +18,8 @@ public class UserProfile : Profile
             .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.AvatarUrl ?? string.Empty));
 
         CreateMap<User, ShortcutUserProfileResponse>()
-            .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.FullName ?? string.Empty))
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FullName ?? string.Empty))
+            .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username ?? string.Empty))
             .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.AvatarUrl ?? string.Empty));
 
         CreateMap<User, UserProfileResponse>()

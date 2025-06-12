@@ -60,7 +60,7 @@ public class CoursesController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("deleteCourse")]
+    [HttpDelete("deleteCourse")]
     public async Task<ActionResult> DeleteCourse(Guid id, CancellationToken cancellationToken)
     {
         await _deleteCourse.ExecuteAsync(id, cancellationToken);

@@ -50,7 +50,8 @@ public class CourseProfile : Profile
                 src.Students != null
                     ? src.Students.Select(s => new ShortcutUserProfileResponse
                     {
-                        Username = s.User.FullName ?? string.Empty,
+                        FullName = s.User.FullName ?? string.Empty,
+                        Username = s.User.Username ?? string.Empty,
                         AvatarUrl = s.User.AvatarUrl ?? string.Empty
                     }).ToList()
                     : new List<ShortcutUserProfileResponse>()));

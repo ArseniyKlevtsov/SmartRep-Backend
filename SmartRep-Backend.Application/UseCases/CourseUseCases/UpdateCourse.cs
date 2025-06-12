@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SmartRep_Backend.Application.Dtos.Courses.Requests;
 using SmartRep_Backend.Application.Interfaces.UseCases.CourseUseCases;
+using SmartRep_Backend.Domain.IncludeStates;
 using SmartRep_Backend.Domain.interfaces.Repositories;
 
 namespace SmartRep_Backend.Application.UseCases.CourseUseCases;
@@ -30,15 +31,18 @@ public class UpdateCourse : IUpdateCourse
         var currentStudentNames = course.Students?.Select(s => s.User.Username).ToHashSet() ?? new HashSet<string>();
 
         var newStudentNames = dto.studentNames.Except(currentStudentNames).ToList();
+        var usernamesToRemove = currentStudentNames.Except(newStudentNames).ToList();
 
         if (newStudentNames.Any())
         {
-            // Получаем всех новых студентов одним запросом
+            var state = new UserIncludeState()
+            {
+                IncludeStudentProfile = true
+            };
             var studentsToAdd = (await _unitOfWork.Users
-                .GetUsersByNamesAsync(newStudentNames, cancellationToken))
+                .GetWithIncludeByPredicateAsync(u =>  newStudentNames.Contains(u.Username),state, cancellationToken))
                 .ToList();
 
-            // Проверяем, что все студенты найдены
             var foundStudentNames = studentsToAdd.Select(s => s.Username).ToHashSet();
             var notFoundNames = newStudentNames.Except(foundStudentNames).ToList();
 
@@ -52,7 +56,7 @@ public class UpdateCourse : IUpdateCourse
                 course.Students.Add(student.StudentProfile);
             }
         }
-
+        await _unitOfWork.Courses.UpdateAsync(course, cancellationToken);
         await _unitOfWork.SaveAsync();
     }
 }

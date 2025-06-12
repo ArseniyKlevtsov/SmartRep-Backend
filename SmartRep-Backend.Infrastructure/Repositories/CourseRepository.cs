@@ -59,7 +59,6 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
     public async Task<Course?> GetWithStudentsAsync(Guid id,CancellationToken cancellationToken)
     {
         return await _dbSet
-            .AsNoTracking()
             .Include(c => c.Students)
             .ThenInclude(tp => tp.User)
             .FirstOrDefaultAsync( c => c.Id == id,cancellationToken);
