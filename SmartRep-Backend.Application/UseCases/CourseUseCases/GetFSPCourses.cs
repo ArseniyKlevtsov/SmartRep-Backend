@@ -18,7 +18,7 @@ public class GetFSPCourses : IGetFSPCourses
     public async Task<GetFSPCoursesResponse> ExecuteAsync(GetFSPCoursesRequest dto, CancellationToken cancellationToken)
     {
 
-        var courses = await _unitOfWork.Courses.GetWithTeacherAsync(cancellationToken);
+        var courses = await _unitOfWork.Courses.GetWithTeacherAndStudentsAsync(cancellationToken);
 
         if (!string.IsNullOrEmpty(dto.NameFilter))
         {

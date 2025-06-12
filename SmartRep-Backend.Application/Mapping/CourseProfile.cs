@@ -43,6 +43,9 @@ public class CourseProfile : Profile
                 src.TeacherProfile != null && src.TeacherProfile.User != null
                     ? src.TeacherProfile.User.AvatarUrl
                     : null))
+            .ForMember(dest => dest.TeacherId, opt => opt.MapFrom(src =>
+                src.TeacherProfile != null && src.TeacherProfile.User != null
+                    ? src.TeacherProfile.User.Id : Guid.NewGuid()))
             .ForMember(dest => dest.Students, opt => opt.MapFrom(src =>
                 src.Students != null
                     ? src.Students.Select(s => new ShortcutUserProfileResponse

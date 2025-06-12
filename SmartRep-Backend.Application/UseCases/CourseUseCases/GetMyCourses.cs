@@ -2,6 +2,7 @@
 using SmartRep_Backend.Application.Dtos.Courses.Requests;
 using SmartRep_Backend.Application.Dtos.Courses.Responses;
 using SmartRep_Backend.Application.Interfaces.UseCases.CourseUseCases;
+using SmartRep_Backend.Domain.Entities;
 using SmartRep_Backend.Domain.interfaces.Repositories;
 
 namespace SmartRep_Backend.Application.UseCases.CourseUseCases;
@@ -18,11 +19,18 @@ public class GetMyCourses : IGetMyCourses
 
     public async Task<GetFSPCoursesResponse> ExecuteAsync(GetMyCoursesRequest dto, CancellationToken cancellationToken)
     {
-        var courses = await _unitOfWork.Courses.GetWithTeacherAsync(cancellationToken);
+        var courses = await _unitOfWork.Courses.GetWithTeacherAndStudentsAsync(cancellationToken);
 
         var totalCount = courses.Count();
 
-        courses = courses.Where(course => course.TeacherProfile.UserId == dto.UserId).ToList();
+        if(dto.AsTeacher)
+        {
+            courses = courses.Where(course => course.TeacherProfile.UserId == dto.UserId).ToList();
+        }
+        else
+        {
+            courses = courses.Where(course => course.Students.Any(sp => sp.UserId  == dto.UserId)).ToList();
+        }
 
         var response = new GetFSPCoursesResponse
         {

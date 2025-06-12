@@ -11,12 +11,14 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
 {
     public CourseRepository(SmartRepDbContext context) : base(context) { }
 
-    public async Task<IEnumerable<Course>> GetWithTeacherAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Course>> GetWithTeacherAndStudentsAsync(CancellationToken cancellationToken)
     {
         return await _dbSet
             .AsNoTracking()
             .Include(c => c.TeacherProfile)
             .ThenInclude(tp => tp.User)
+            .Include(c => c.Students)
+            .ThenInclude(s => s.User)
             .ToListAsync(cancellationToken);
     }
 

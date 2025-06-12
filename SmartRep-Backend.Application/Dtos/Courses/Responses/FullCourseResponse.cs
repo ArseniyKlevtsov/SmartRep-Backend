@@ -9,6 +9,7 @@ public class FullCourseResponse
     public string CourseAvatarUrl { get; set; }
     public double Price { get; set; }
     public string TeacherName { get; set; }
+    public Guid TeacherId { get; set; }
     public string TeacherAvatarUrl { get; set; }
 
     public List<ShortcutUserProfileResponse> Students {  get; set; }
