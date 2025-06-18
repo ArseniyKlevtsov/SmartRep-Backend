@@ -2,6 +2,7 @@
 public class TeacherPreviewResponse
 {
     public Guid TeacherId { get; set; }
+    public Guid UserId { get; set; }
     public string TeacherName { get; set; }
     public string TeacherDescription { get; set; }
     public string TeacherAvatarUrl { get; set; }
